@@ -73,7 +73,7 @@ class ATOM:
         super().__init__()
 
 
-def _index(subiter, mainiter):
+def _index(subiter, mainiter) -> int:
     '''
         Indexing a iterable from another iterable
     '''
@@ -83,7 +83,7 @@ def _index(subiter, mainiter):
     return -1
 
 
-def _locate(pack, header='mvhd'):
+def _locate(pack, header='mvhd') -> int:
     '''
         Locates ATOM Header index
     '''
@@ -94,7 +94,7 @@ def _locate(pack, header='mvhd'):
     return header_index
 
 
-def _load(pack):
+def _load(pack) -> io.BytesIO:
     '''
         Turns bytearray into a full MVHD header ByteIO object
     '''
@@ -106,7 +106,7 @@ def _load(pack):
     return pack
 
 
-def unpack(pack):
+def unpack(pack) -> type(ATOM):
     '''
         Unpacks MVHD ATOM header into a ATOM object
     '''
@@ -144,4 +144,4 @@ if __name__ == "__main__":
         if 'ATOM' in key:
             print(key.ljust(24),getattr(atom,key))
     print('#'*50)
-    input()
+    input('Press ENTER to exit.')
