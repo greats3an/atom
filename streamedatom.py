@@ -1,12 +1,10 @@
 '''
-# HTTPVideoDuration Module
+# Streamedatom Module
 
     Gets a HTTP video's length via its ATOM header / footer
 
     Note that the video resource must support `HTTP 206 Partial-Content`
 '''
-import sys
-sys.path.append('..')
 import atom
 from requests import Session
 blocksize = 2048
