@@ -5,7 +5,8 @@
 
     Note that the video resource must support `HTTP 206 Partial-Content`
 '''
-import atom
+from . import atom
+
 from requests import Session
 blocksize = 2048
 # Content length in bytes at minium to contain MVHD info
@@ -42,7 +43,8 @@ def GetHTTPVideoHeader(url, session: Session, headers={}, params={}):
     '''
     Gets a HTTP video's ATOM header / footer
     '''
-    length = int(GetHeaders(url, session, headers, params)['Content-Length'])
+    header = GetHeaders(url, session, headers, params)
+    length = int(header['Content-Length'])
     # Total content length in bytes
 
     try:
@@ -54,7 +56,7 @@ def GetHTTPVideoHeader(url, session: Session, headers={}, params={}):
         atomheader = PartialGet(url, session, 0, blocksize, headers, params).content
         atomheader = atom.unpack(atomheader)
 
-    return atomheader
+    return {'atom':atomheader,'http':header}
 
 if  __name__ == "__main__":
     session = Session()
