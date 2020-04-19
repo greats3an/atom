@@ -5,7 +5,12 @@
 
     Note that the video resource must support `HTTP 206 Partial-Content`
 '''
-from . import atom
+try:
+    from . import atom
+except ImportError:
+    # For importing local module
+    import atom
+
 
 from requests import Session
 blocksize = 2048
@@ -61,10 +66,9 @@ def GetHTTPVideoHeader(url, session: Session, headers={}, params={}):
 if  __name__ == "__main__":
     session = Session()
     url = input("Video URL:")
-    atom = GetHTTPVideoHeader(url,session)
+    atom = GetHTTPVideoHeader(url,session)['atom']
     print('#'*50)
     for key in dir(atom):
-        if 'ATOM' in key:
-            print(key.ljust(24),getattr(atom,key))
+        if key[:4]=='ATOM':print(key.ljust(24),getattr(atom,key))
     print('#'*50)
     input('Press ENTER to exit.')
