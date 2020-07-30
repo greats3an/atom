@@ -1,7 +1,7 @@
 from atom import ATOM
 
-video = open('bruh.mp4', 'r+b')
-
+path = input('Media file path >>>').replace("\"", '')
+video = open(path, 'r+b')
 msb = video.read(2048)
 # msb : Most significant block
 offset = ATOM.locate(msb)

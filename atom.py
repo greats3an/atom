@@ -282,4 +282,5 @@ if __name__ == "__main__":
             if key[:4] == 'ATOM':
                 print(key.ljust(24), getattr(atom, key))
         print('#'*50)
+        return 'Press any key to exit'
     input(printout())
