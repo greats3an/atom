@@ -1,17 +1,17 @@
 from atom import ATOM
-chunk = 32768
+blocksize = 32768
 path = input('Media file path >>>').replace("\"", '')
 video = open(path, 'r+b')
 try:
-    msb = video.read(chunk)
+    msb = video.read(blocksize)
     # msb : Most significant block
     offset = ATOM.locate(msb)
 except Exception:
     # Probably no MVHD header was found...from the head
     # Read from the tail,then let's talk
     print("[-] Looking from the tail...")
-    video.seek(-chunk,2)
-    msb = video.read(chunk)
+    video.seek(-blocksize,2)
+    msb = video.read(blocksize)
     offset = ATOM.locate(msb)
 # where the ATOM header would be
 block = ATOM.extract(msb)
@@ -26,7 +26,7 @@ print('[-] Converted to ATOM time stamp "%s"' % new_duration)
 header.ATOM_DURATION = new_duration
 print('[-] Writing back ATOM header')
 # Overwriting the old header
-video.seek(offset-chunk,1)
+video.seek(offset-blocksize,1)
 video.write(header())
 video.close()
-input('[!] Operation complete')
+input('[!] Operation complete') 
